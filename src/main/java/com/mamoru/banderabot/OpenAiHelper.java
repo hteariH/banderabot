@@ -18,7 +18,7 @@ public class OpenAiHelper {
 
     public String getCompletion(String text){
 
-        OpenAiService service = new OpenAiService("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",10000);
+        OpenAiService service = new OpenAiService(token,1000);
         CompletionRequest completionRequest = CompletionRequest.builder()
                 .prompt(text)
                 .model("text-davinci-003")
