@@ -16,11 +16,6 @@
 		<version>2.6.2</version>
 		<relativePath />
 	</parent>
-	
-	<issueManagement>
-		<url>https://github.com/xabgesagtx/telegram-spring-boot-starter-example/issues</url>
-		<system>GitHub Issues</system>
-	</issueManagement>
 
 	<licenses>
 		<license>
@@ -31,9 +26,6 @@
 	</licenses>
 
 	<scm>
-		<url>https://github.com/xabgesagtx/telegram-spring-boot-starter-example</url>
-		<connection>scm:git:git://github.com/xabgesagtx/telegram-spring-boot-starter-example.git</connection>
-		<developerConnection>scm:git:git@github.com:xabgesagtx/telegram-spring-boot-starter-example.git</developerConnection>
 		<tag>HEAD</tag>
  	</scm>
 
@@ -54,6 +46,19 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>4.9.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.theokanning.openai-gpt3-java</groupId>
+			<artifactId>client</artifactId>
+			<version>0.9.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<dependencyManagement>
