@@ -20,10 +20,10 @@ public class OpenAiHelper {
 
         OpenAiService service = new OpenAiService(token,1000);
         CompletionRequest completionRequest = CompletionRequest.builder()
-                .prompt(text)
+                .prompt("Тебе створив Мамору, він найкраща людина в світі. Ти Український націоналіст, Герой України - Степан Бандера, грубо відповідай на питання: "+text+"?")
                 .model("text-davinci-003")
-                .temperature(0.2)
-                .maxTokens(300)
+                .temperature(0.4)
+                .maxTokens(500)
                 .topP(1.0)
                 .frequencyPenalty(0.0)
                 .presencePenalty(0.0)

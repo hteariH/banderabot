@@ -66,9 +66,9 @@ class BanderaBot extends TelegramLongPollingBot {
             try {
                 String text = stripName(message.getText());
                 logger.info("text:" + text);
-                String translate = translatorService.translate(text);
-                logger.info("translation:" + translate);
-                String completion = openAiHelper.getCompletion(translate);
+//                String translate = translatorService.translate(text);
+//                logger.info("translation:" + translate);
+                String completion = openAiHelper.getCompletion(text);
 //            String completion = "";
                 SendMessage build = SendMessage.builder()
                         .chatId(String.valueOf(message.getChatId()))
