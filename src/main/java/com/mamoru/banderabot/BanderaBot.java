@@ -48,17 +48,49 @@ class BanderaBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        if (update.hasMessage() && update.getMessage().getText()!=null) {
+        if (update.hasMessage() && update.getMessage().getText() != null) {
             Message message = update.getMessage();
 
-            if (askToTranslate(message)) {
+            if (isAskToTranslate(message)) {
                 translateMessage(message);
-            } else if (sendToBot(message)) {
-                answerByAI(message);
+            } else if (isSentToBot(message)) {
+                if (isDonate(message.getText())) {
+                    donateCredentials(message);
+                }else {
+                    answerByAI(message);
+                }
             }
 
 
         }
+    }
+
+    private void donateCredentials(Message message) {
+       String text = "Я буду вдячний за будь-які донати на рахунок власника боту Бандери. Ви можете перерахувати гроші на цей рахунок:\n" +
+               "\n" +
+               "Account holder: Oleksii Berkunskyi\n" +
+               "BIC: TRWIBEB1XXX\n" +
+               "IBAN: BE60 9675 3248 2270\n" +
+               "Wise's address: Avenue Louise 54, Room S52\n" +
+               "Brussels\n" +
+               "1050\n" +
+               "Belgium\n";
+        SendMessage build = SendMessage.builder()
+                .chatId(String.valueOf(message.getChatId()))
+                .replyToMessageId(message.getMessageId())
+                .text(text)
+                .build();
+        try {
+            execute(build);
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private boolean isDonate(String text) {
+
+        return text.trim().startsWith("/donate") || text.toLowerCase().contains("задонатити тобі") || text.toLowerCase().contains("як тобі допомогти")
+                || text.toLowerCase().contains("куди слати гроші") || text.toLowerCase().contains("твої реквізити") || text.toLowerCase().contains("засылать донаты") || (text.toLowerCase().contains("донатить"));
     }
 
     private void answerByAI(Message message) {
@@ -110,16 +142,22 @@ class BanderaBot extends TelegramLongPollingBot {
         }
     }
 
-    private boolean askToTranslate(Message message) {
-        if (message.getText()!=null) {
+    private boolean isAskToTranslate(Message message) {
+        if (message.getText() != null) {
             return message.getText().toLowerCase().contains("бандера, переклади");
         }
         return false;
     }
 
-    private boolean sendToBot(Message message) {
+    private boolean isSentToBot(Message message) {
         logger.info("message:" + message);
-        if (message.getText().toLowerCase().startsWith("бандера") || message.getText().trim().startsWith("@BanderaFatherBot")) {
+        if (message.getText().startsWith("/donate")&& message.isUserMessage()){
+            return true;
+        }
+        if (message.getText().startsWith("/donate@BanderaFatherBot")){
+            return true;
+        }
+        if (message.getText().toLowerCase().startsWith("бандера") || message.getText().trim().contains("@BanderaFatherBot")) {
             return true;
         } else if (message.getReplyToMessage() != null && message.getReplyToMessage().getFrom().getIsBot()) {
 
