@@ -119,7 +119,7 @@ class BanderaBot extends TelegramLongPollingBot {
 
     private boolean sendToBot(Message message) {
         logger.info("message:" + message);
-        if (message.getText().toLowerCase().startsWith("бандера")) {
+        if (message.getText().toLowerCase().startsWith("бандера") || message.getText().trim().startsWith("@BanderaFatherBot")) {
             return true;
         } else if (message.getReplyToMessage() != null && message.getReplyToMessage().getFrom().getIsBot()) {
 
